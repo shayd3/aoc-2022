@@ -1,4 +1,4 @@
-# aoc_template.py
+# aoc202201.py
 
 import pathlib
 import sys
