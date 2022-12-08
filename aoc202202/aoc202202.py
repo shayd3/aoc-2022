@@ -27,18 +27,39 @@ def part1(data):
     total_points = 0
     for game_actions in data:
         # Player 1 = Opponent, Player 2 = You
-        winner = RPS.find_winner(RPS.Player1Action[game_actions[0]].value, RPS.Player2Action[game_actions[1]].value)
+        winner = RPS.find_winner(RPS.PlayerAction[game_actions[0]].value, RPS.PlayerAction[game_actions[1]].value)
         if winner == 0:
             total_points += RPS.RPSResultPoints["DRAW"].value
         if winner == 1:
             total_points += RPS.RPSResultPoints["LOSS"].value
         if winner == 2:
             total_points += RPS.RPSResultPoints["WIN"].value
-        total_points += RPS.Player2Action[game_actions[1]].value
+        total_points += RPS.PlayerAction[game_actions[1]].value
     return total_points
 
 def part2(data):
-    """Solve part 2."""
+    """
+    Solve part 2.
+
+    A => Rock (1 Point)
+    B => Paper (2 Points)
+    C => Scissors (3 Points)
+
+    X => Lose
+    Y => Draw
+    Z => Win
+
+    Find 2nd move with the given outcome.
+    """
+    total_points = 0
+    for game_actions in data:
+        opponent_move = game_actions[0]
+        game_result = game_actions[1]
+
+        shape_result = RPS.rules[opponent_move][game_result]
+        points = RPS.RPSResultPoints[RPS.GameResults[game_result].value].value + RPS.PlayerAction[shape_result].value
+        total_points += points
+    return total_points
 
 def solve(puzzle_input):
     """Solve the puzzle for the given input."""
