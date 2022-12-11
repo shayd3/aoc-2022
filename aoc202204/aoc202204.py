@@ -25,6 +25,19 @@ def part1(data):
 
 def part2(data):
     """Solve part 2."""
+    count = 0
+    for pairs in data:
+        pair1_start, pair1_end = split_range(pairs[0])
+        pair2_start, pair2_end = split_range(pairs[1])
+        pair1 = range(pair1_start, pair1_end+1)
+        pair2 = range(pair2_start, pair2_end+1)
+
+        pair1set = set(pair1)
+        pair2set = set(pair2)
+        intersection = pair1set.intersection(pair2set)
+        if(len(intersection) != 0):
+            count += 1
+    return count
 
 def split_range(range_str):
     start, end = range_str.split("-")
