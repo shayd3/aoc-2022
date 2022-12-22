@@ -34,17 +34,25 @@ def part1(stacks, procedure):
         for _ in range(amount):
             val = stacks[source_idx].pop()
             stacks[target_idx].insert(len(stacks[target_idx]),val)
-    answer = [stack [-1] for stack in stacks]
+    answer = [stack[-1] for stack in stacks]
     return "".join(answer)
 
 def part2(stacks, procedure):
     """Solve part 2."""
+    for step in procedure:
+        amount, source_idx, target_idx = step
+        stacks[target_idx].extend(stacks[source_idx][-amount:])
+        stacks[source_idx] = stacks[source_idx][:-amount]
+
+    answer = [stack[-1] for stack in stacks]
+    return "".join(answer)
 
 def solve(puzzle_input):
     """Solve the puzzle for the given input."""
-    stacks, procedure = parse(puzzle_input)
-    solution1 = part1(stacks, procedure)
-    solution2 = part2(stacks, procedure)
+    stacks1, procedure1 = parse(puzzle_input)
+    stacks2, procedure2 = parse(puzzle_input)
+    solution1 = part1(stacks1, procedure1)
+    solution2 = part2(stacks2, procedure2)
 
     return solution1, solution2
 
