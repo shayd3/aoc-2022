@@ -22,6 +22,14 @@ def part1(data):
 
 def part2(data):
     """Solve part 2."""
+    sequence_window = []
+    for i, char in enumerate(data):
+        sequence_window.append(char)
+        if len(sequence_window) == 14:
+            if len(set(sequence_window)) == 14:
+                return i + 1
+            else:
+                sequence_window.pop(0)
 
 def solve(puzzle_input):
     """Solve the puzzle for the given input."""
