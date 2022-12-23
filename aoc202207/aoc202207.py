@@ -11,6 +11,27 @@ def parse(puzzle_input):
 
 def part1(data):
     """Solve part 1."""
+    file_sizes = get_sizes(data)
+    directories_file_sizes_below_threshold_total = 0
+    for file_dir, file_size in file_sizes.items():
+        if file_size <= 100000:
+            directories_file_sizes_below_threshold_total += file_size
+    return directories_file_sizes_below_threshold_total
+
+def part2(data):
+    """Solve part 2."""
+    file_sizes = get_sizes(data)
+    total_disk_space = 70000000
+    needed_disk_space = 30000000
+    space_needed_to_free = file_sizes['/'] + needed_disk_space - total_disk_space
+
+    directories_above_threshold = {}
+    for file_dir, file_size in file_sizes.items():
+        if file_size >= space_needed_to_free:
+            directories_above_threshold[file_dir] = file_size
+    return(min(directories_above_threshold.values()))
+
+def get_sizes(data):
     file_struct = []
     file_sizes = defaultdict(int)
     for line in data.split("\n"):
@@ -35,13 +56,7 @@ def part1(data):
                 for i in range(len(file_struct)):
                     directory = '/'.join(file_struct[:i+1]).replace("//","/")
                     file_sizes[directory] += filesize
-    directories_file_sizes_below_threshold_total = 0
-    for file_dir, file_size in file_sizes.items():
-        if file_size <= 100000:
-            directories_file_sizes_below_threshold_total += file_size
-    return directories_file_sizes_below_threshold_total
-def part2(data):
-    """Solve part 2."""
+    return file_sizes
 
 def solve(puzzle_input):
     """Solve the puzzle for the given input."""
